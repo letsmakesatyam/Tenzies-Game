@@ -1,6 +1,7 @@
 import React from "react";
 import Die from "./Die";
-import nanoid from "nanoid"
+import {nanoid} from "nanoid"
+
 export default function InnerContainer(){
     const [dice , setDice] = React.useState(allNewDice());
     function allNewDice(){
@@ -8,7 +9,7 @@ export default function InnerContainer(){
         for(let i = 0 ; i<10;i++){
             let randomValue = Math.floor(Math.random() * 6);
             array.push({
-                id : nanoid() , 
+                id : nanoid(), 
                 value : randomValue,
                 isHeld : false
             });
@@ -18,13 +19,28 @@ export default function InnerContainer(){
 
         )
     }
+    function handleClick(id){
+        setDice((prevDie)=>{
+            return prevDie.map((item)=>{
+                return item.id === id ? {...item , isHeld : !prevDie.isHeld} : {...item}
+            })
+        })
+
+
+    }
     const rowOneDieComponentsArray = dice.map((object)=>{
         return(
-            <Die key = {object.id}  value = {object.value}/>
+            <Die handleClick = {handleClick} key = {object.id} id = {object.id}  value = {object.value} isHeld = {object.isHeld}/>
         )
     })
-    function reloadGame(){
-        setDice(allNewDice());
+    function rollDice(){
+        
+        setDice((oldArray)=>{
+            return oldArray.map((item)=>{
+              return   item.isHeld ? item : {id: nanoid() , value: Math.floor(Math.random() * 6) , isHeld : false}
+            })
+        })
+
     }
    
     
@@ -45,7 +61,7 @@ export default function InnerContainer(){
                     
 
                 </div>
-                <button onClick = {reloadGame} className="button">Roll</button>
+                <button onClick = {rollDice} className="button">Roll</button>
 
             </div>
 
