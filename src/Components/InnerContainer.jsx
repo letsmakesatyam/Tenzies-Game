@@ -115,7 +115,7 @@ export default function InnerContainer(){
 
                 </div>
                 <button onClick = {rollDice} className="button">{tenzies ?"New Game" : "Roll"}</button>
-                {tenzies && <h1>You Won</h1>}
+                {tenzies && <h1 className="won-text">You Won</h1>}
 
             </div>
 
