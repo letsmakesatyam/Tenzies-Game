@@ -32,6 +32,9 @@ function fullScreenConfetti() {
 
 
 export default function InnerContainer(){
+    const[time , setTime] = React.useState(0);
+    const[isRunning , setIsRunning] = React.useState(false);
+    const [rolls , setRolls] = React.useState(0);
     
     const [dice , setDice] = React.useState(allNewDice());
     const [tenzies , setTenzies] = React.useState(false);
@@ -44,10 +47,23 @@ export default function InnerContainer(){
         }) ){
             setTenzies(true);
             console.log("You Won");
+            setIsRunning(false);
+  
             confetti(); 
         }
 
     }, [dice])
+    React.useEffect(()=>{
+        let interval;
+        if(isRunning){
+            interval = setInterval(()=>{
+                setTime((prevTime)=>{
+                    return prevTime + 1 ;
+                })
+            }, 1000)
+        }
+        return ()=> clearInterval(interval);
+    },[isRunning]);
     function allNewDice(){
         let array = [];
         for(let i = 0 ; i<10;i++){
@@ -79,15 +95,21 @@ export default function InnerContainer(){
     })
     function rollDice(){
         if(!tenzies){
+            if(rolls === 0){
+                setIsRunning(true);
+            }
             setDice((oldArray)=>{
             return oldArray.map((item)=>{
               return   item.isHeld ? item : {id: nanoid() , value: Math.floor(Math.random() * 6) , isHeld : false}
             })
         })
+        setRolls((prevRoll)=> prevRoll + 1);
         }
         else{
             setTenzies(false)
             setDice(allNewDice());
+            setRolls(0);
+            setTime(0);
         }
         
         
@@ -116,6 +138,7 @@ export default function InnerContainer(){
                 </div>
                 <button onClick = {rollDice} className="button">{tenzies ?"New Game" : "Roll"}</button>
                 {tenzies && <h1 className="won-text">You Won</h1>}
+                {tenzies && <p className="win-para">It took {rolls} rolls and {time} seconds for you to complete</p>}
 
             </div>
 
