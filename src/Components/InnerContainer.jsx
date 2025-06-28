@@ -3,7 +3,21 @@ import Die from "./Die";
 import {nanoid} from "nanoid"
 
 export default function InnerContainer(){
+    
     const [dice , setDice] = React.useState(allNewDice());
+    const [tenzies , setTenzies] = React.useState(false);
+    React.useEffect(()=>{
+        let value2 = dice[0].value;
+        if(dice.every((object)=>{
+            return object.value  === value2;
+        }) &&dice.every((object)=>{
+            return  object.isHeld === true ;
+        }) ){
+            setTenzies(true);
+            console.log("You Won");
+        }
+
+    }, [dice])
     function allNewDice(){
         let array = [];
         for(let i = 0 ; i<10;i++){
@@ -42,6 +56,7 @@ export default function InnerContainer(){
         })
 
     }
+
    
     
     return(
@@ -62,6 +77,7 @@ export default function InnerContainer(){
 
                 </div>
                 <button onClick = {rollDice} className="button">Roll</button>
+                {tenzies && <h1>You Won</h1>}
 
             </div>
 
