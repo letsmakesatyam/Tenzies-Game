@@ -32,6 +32,12 @@ function fullScreenConfetti() {
 
 
 export default function InnerContainer(){
+    const [bestRolls , setBestRolls] = React.useState(()=>{
+        return Number(localStorage.getItem("bestRolls" || null));
+    });
+    const [bestTime , setBestTime] = React.useState(()=>{
+        return Number(localStorage.getItem("bestTime" || null));
+    });
     const[time , setTime] = React.useState(0);
     const[isRunning , setIsRunning] = React.useState(false);
     const [rolls , setRolls] = React.useState(0);
@@ -46,10 +52,17 @@ export default function InnerContainer(){
             return  object.isHeld === true ;
         }) ){
             setTenzies(true);
-            console.log("You Won");
+            if(!bestRolls || rolls < bestRolls){
+                localStorage.setItem("bestRolls" ,  rolls);
+                setBestRolls(rolls);
+            }
+            if(!bestTime || time < bestTime){
+                localStorage.setItem("bestTime" , time);
+                setBestTime(time);
+            }
             setIsRunning(false);
   
-            confetti(); 
+            fullScreenConfetti();
         }
 
     }, [dice])
@@ -139,6 +152,7 @@ export default function InnerContainer(){
                 <button onClick = {rollDice} className="button">{tenzies ?"New Game" : "Roll"}</button>
                 {tenzies && <h1 className="won-text">You Won</h1>}
                 {tenzies && <p className="win-para">It took {rolls} rolls and {time} seconds for you to complete</p>}
+                {tenzies && <p className="best-para">Your Best: {bestRolls} rolls and {bestTime} seconds</p>}
 
             </div>
 

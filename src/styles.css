@@ -1,7 +1,9 @@
-.body{
-    box-sizing: border-box;
-    margin: 0;
-    font-family: "Roboto";
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
 }
 .bg-container{
     background-color: rgb(238, 189, 149);
@@ -32,6 +34,7 @@
 }
 .heading{
     text-align: center;
+    color:orange;
 
 }
 .para{
@@ -80,4 +83,7 @@
 }
 .win-para{
     color:rgb(64, 87, 218)
+}
+.best-para{
+    color:brown;
 }
