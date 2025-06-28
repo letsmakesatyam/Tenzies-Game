@@ -78,12 +78,19 @@ export default function InnerContainer(){
         )
     })
     function rollDice(){
-        
-        setDice((oldArray)=>{
+        if(!tenzies){
+            setDice((oldArray)=>{
             return oldArray.map((item)=>{
               return   item.isHeld ? item : {id: nanoid() , value: Math.floor(Math.random() * 6) , isHeld : false}
             })
         })
+        }
+        else{
+            setTenzies(false)
+            setDice(allNewDice());
+        }
+        
+        
 
     }
 
