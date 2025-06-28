@@ -1,21 +1,26 @@
 import React from "react";
 import Die from "./Die";
+import nanoid from "nanoid"
 export default function InnerContainer(){
     const [dice , setDice] = React.useState(allNewDice());
     function allNewDice(){
         let array = [];
         for(let i = 0 ; i<10;i++){
             let randomValue = Math.floor(Math.random() * 6);
-            array.push(randomValue);
+            array.push({
+                id : nanoid() , 
+                value : randomValue,
+                isHeld : false
+            });
         }
         return(
             array
 
         )
     }
-    const rowOneDieComponentsArray = dice.map((value)=>{
+    const rowOneDieComponentsArray = dice.map((object)=>{
         return(
-            <Die value = {value}/>
+            <Die key = {object.id}  value = {object.value}/>
         )
     })
     function reloadGame(){
