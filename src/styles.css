@@ -65,3 +65,11 @@
     flex-wrap: wrap;
 
 }
+.button{
+    background-color:rgb(4, 4, 107);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px;
+    color: white;
+    width: 80px;
+}

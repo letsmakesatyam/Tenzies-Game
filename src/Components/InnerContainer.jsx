@@ -18,8 +18,11 @@ export default function InnerContainer(){
             <Die value = {value}/>
         )
     })
+    function reloadGame(){
+        setDice(allNewDice());
+    }
    
-    allNewDice();
+    
     return(
         <div className = "inner-container">
             <div className="card">
@@ -37,7 +40,7 @@ export default function InnerContainer(){
                     
 
                 </div>
-                <button className="buttton">Roll</button>
+                <button onClick = {reloadGame} className="button">Roll</button>
 
             </div>
 
