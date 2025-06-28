@@ -1,6 +1,35 @@
 import React from "react";
 import Die from "./Die";
 import {nanoid} from "nanoid"
+import confetti from "canvas-confetti";
+
+function fullScreenConfetti() {
+  const duration = 2 * 1000;
+  const end = Date.now() + duration;
+
+  (function frame() {
+    confetti({
+      particleCount: 5,
+      angle: 60,
+      spread: 55,
+      origin: { x: 0 },
+    });
+    confetti({
+      particleCount: 5,
+      angle: 120,
+      spread: 55,
+      origin: { x: 1 },
+    });
+
+    if (Date.now() < end) {
+      requestAnimationFrame(frame);
+    }
+  })();
+}
+
+
+
+
 
 export default function InnerContainer(){
     
@@ -15,6 +44,7 @@ export default function InnerContainer(){
         }) ){
             setTenzies(true);
             console.log("You Won");
+            confetti(); 
         }
 
     }, [dice])
@@ -62,6 +92,7 @@ export default function InnerContainer(){
     return(
         <div className = "inner-container">
             <div className="card">
+               
                 <div className="text-container">
                     <h1 className = "heading">Tenzies</h1>
                     <p className="para">Roll untill all dice are the same. Click each die to freeze it at its current value between rolls.</p>
@@ -76,7 +107,7 @@ export default function InnerContainer(){
                     
 
                 </div>
-                <button onClick = {rollDice} className="button">Roll</button>
+                <button onClick = {rollDice} className="button">{tenzies ?"New Game" : "Roll"}</button>
                 {tenzies && <h1>You Won</h1>}
 
             </div>
