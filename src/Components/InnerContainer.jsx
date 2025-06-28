@@ -1,6 +1,25 @@
 import React from "react";
 import Die from "./Die";
 export default function InnerContainer(){
+    const [dice , setDice] = React.useState(allNewDice());
+    function allNewDice(){
+        let array = [];
+        for(let i = 0 ; i<10;i++){
+            let randomValue = Math.floor(Math.random() * 6);
+            array.push(randomValue);
+        }
+        return(
+            array
+
+        )
+    }
+    const rowOneDieComponentsArray = dice.map((value)=>{
+        return(
+            <Die value = {value}/>
+        )
+    })
+   
+    allNewDice();
     return(
         <div className = "inner-container">
             <div className="card">
@@ -11,21 +30,9 @@ export default function InnerContainer(){
                 </div>
                 <div className="die-container">
                     <div className="die-row">
-                        <Die value = "1"/>
-                        <Die value = "1"/>
-                        <Die value = "1"/>
-                        <Die value = "1"/>
-                        <Die value = "1"/>
-
+                        {rowOneDieComponentsArray}
                     </div>
-                    <div className="die-row">
-                        <Die value = "1"/>
-                        <Die value = "1"/>
-                        <Die value = "1"/>
-                        <Die value = "1"/>
-                        <Die value = "1"/>
-
-                    </div>
+                    
                     
                     
 
